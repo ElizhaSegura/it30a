@@ -9,7 +9,6 @@ CREATE TABLE books (
 INSERT INTO books (book_title,book_author,book_category) VALUES
 ("Circe", "Madeline Miller", "Historical Fiction"),
 ("The Count of Monte Cristo", "Alexandre Dumas", "Novel"),
-("The Alchemist", "Paulo Coelho", "Fantasy Fiction");
 
     CREATE TABLE borrow (
         borrow_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,3 +54,59 @@ INSERT INTO books (book_title,book_author,book_category) VALUES
 
         WHERE br.borrow_return_date is NULL
         ORDER BY br.borrow_date DESC;
+
+
+    -- August 27, 2026 --
+    SELECT
+        br.borrow_id,
+
+        CONCAT(
+            s.student_first_name,
+            ' ',
+            s.student_last_name
+            ) as student_name,
+         
+            b.book_title,
+            b.book_author,
+            b.book_category,
+
+            br.borrow_date,
+            br.borrow_return_date
+        FROM borrow br
+        JOIN students s ON
+            br.student_id = s.student_id
+        JOIN books b ON
+            br.book_id = b.book_id
+
+        WHERE br.borrow_return_date is NULL
+        ORDER BY br.borrow_date DESC;
+
+    UPDATE borrow
+    SET borrow_return_date = CURRENT_TIMESTAMP
+    -- Set borrow id for the borrowed book you want to return
+    WHERE borrow_id = 4 AND borrow_return_date IS NULL;
+
+ SELECT
+        br.borrow_id,
+
+        CONCAT(
+            s.student_first_name,
+            ' ',
+            s.student_last_name
+            ) as student_name,
+         
+            b.book_title,
+            b.book_author,
+            b.book_category,
+
+            br.borrow_date,
+            br.borrow_return_date
+        FROM borrow br
+        JOIN students s ON
+            br.student_id = s.student_id
+        JOIN books b ON
+            br.book_id = b.book_id
+
+        WHERE br.borrow_return_date is NOT NULL
+        ORDER BY br.borrow_date DESC;
+
