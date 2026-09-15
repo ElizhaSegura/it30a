@@ -64,6 +64,6 @@ INNER JOIN students s
 INNER JOIN books b
     ON br.book_id = b.book_id
 
-WHERE br.borrow_return_date IS NULL
+WHERE br.borrow_return_date IS NOT NULL
 
 ORDER BY br.borrow_date DESC;
