@@ -78,9 +78,9 @@ INSERT INTO students (
     student_last_name,
     student_course
 ) VALUES
-    ('Elizha Althea', 'Segura', 'BSIT'),
-    ('Knyre Morwin', 'Sibuan', 'BSBA'),
-    ('Cassandra Mish', 'Lompon', 'BSPharm');
+    ('Ariana', 'Grande', 'BSIT'),
+    ('Olivia', 'Rodrigo', 'BSBA'),
+    ('Sabrina', 'Carpenter', 'BSPharm');
   
 -- Insert statement #2: Insert Books
   INSERT INTO books (
