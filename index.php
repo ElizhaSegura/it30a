@@ -313,6 +313,49 @@ if ($section === 'borrow') {
         }
     }
 
+    // NEW: Return a Book (UPDATE)
+    if ($section === 'borrow' && $action === 'return') {
+
+        $borrowId = (int) ($_GET['id'] ?? 0);
+
+        $stmt = $pdo->prepare("
+            UPDATE borrow
+            SET borrow_return_date = CURRENT_TIMESTAMP
+            WHERE borrow_id = ?
+        ");
+
+        $stmt->execute([$borrowId]);
+
+        if ($stmt->rowCount() > 0) {
+            $_SESSION['alert'] = 'Book returned successfully!';
+        } else {
+            $_SESSION['alert'] = 'This book was already returned or the record was not found';
+        }
+
+        header("Location: index.php?section=borrow");
+        exit;
+    }
+
+    // NEW: Delete Borrow Record (DELETE) 
+    if ($section === 'borrow' && $action === 'delete') {
+
+        $borrowId = (int) ($_GET['id'] ?? 0);
+
+        $stmt = $pdo->prepare("
+            DELETE FROM borrow
+            WHERE borrow_id = ?
+        ");
+
+        $stmt->execute([
+            $borrowId
+            ]);
+
+        $_SESSION['alert'] = 'Borrow record deleted successfully';
+
+        header("Location: index.php?section=borrow");
+        exit;
+    }
+
           if($section === 'borrow') {
 
     // Fetch Students for borrow form
@@ -649,8 +692,10 @@ $borrowRecords = $stmt->fetchAll();
                 <th>Borrow ID</th>
                 <th>Student Name</th>
                 <th>Book Title</th>
-                <th>Created At</th>
-                <th>Returned At</th>
+                <th>Borrow Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
@@ -685,11 +730,36 @@ $borrowRecords = $stmt->fetchAll();
 
                             Not Returned
 
-                        <?php else: ?>
+                      <?php else: ?>
 
                             <?= htmlspecialchars($borrow['borrow_return_date']) ?>
 
+                            <?php endif; ?>
+
+                    </td>
+                    <td>
+                    
+                    <?php if ($borrow['borrow_return_date']): ?>
+
+                            Returned
+
+                       <?php else: ?>
+
+                           Borrowed
+
+                             <?php endif; ?>
+
+                    </td>
+                
+                    <td>
+                        <?php if($borrow['borrow_return_date'] === null): ?>
+                            <a 
+                                href="index.php?section=borrow&action=return&id=<?= $borrow['borrow_id'] ?>"
+                               onclick="return confirm('Mark this book as returned?');" >Return</a>
+                            
                         <?php endif; ?>
+                     <!--   <a href="index.php?section=borrow&action=delete&id=<?= $borrow['borrow_id'] ?>"
+                           onclick="return confirm('Are you sure deleting this borrow record?');">Delete</a> -->
                     </td>
 
                 </tr>
