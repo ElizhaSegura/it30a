@@ -514,9 +514,13 @@ $borrowRecords = $stmt->fetchAll();
                     <?php foreach ($students as $student): ?>
                         <tr>
                             <td><?= htmlspecialchars($student['student_id']) ?></td>
+
                             <td><?= htmlspecialchars($student['student_first_name']) ?></td>
+
                             <td><?= htmlspecialchars($student['student_last_name']) ?></td>
+
                             <td><?= htmlspecialchars($student['student_course']) ?></td>
+
                             <td><?= htmlspecialchars($student['student_created_at'] ?? '') ?></td>
                             <td>
                                 <a href="index.php?section=students&action=update&id=<?= $student['student_id'] ?>">Edit</a>
@@ -655,12 +659,16 @@ $borrowRecords = $stmt->fetchAll();
                     <label>Student:</label>
                     <br>
                     <select name="student_id" required>
+
                         <option value="">
                             -- Select Student --
                         </option>
                         <?php foreach ($students as $student): ?>
+
                             <option value="<?= $student['student_id'] ?>">
+
                                 <?= htmlspecialchars($student['student_first_name'] . ' ' . $student['student_last_name']) ?>
+                                
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -670,10 +678,15 @@ $borrowRecords = $stmt->fetchAll();
                     <label>Books:</label>
                     <br>
                     <select name="book_id" required>
+
                         <option value="">-- Select Book --</option>
+
                         <?php foreach ($books as $book): ?>
+
                             <option value="<?= $book['book_id'] ?>">
+                                
                                 <?= htmlspecialchars($book['book_title'] . ' - ' . $book['book_author']) ?>
+
                             </option>
                         <?php endforeach; ?>
                     </select>
