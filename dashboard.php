@@ -287,6 +287,8 @@ while ($row = $catStmt->fetch()) {
 <body>
        <?php include 'includes/navbar.php'; ?>
 
+         <div class="dashboard">
+
        <div class="stats-grid">
     <div class="stat-card">
         <div class="stat-header">
